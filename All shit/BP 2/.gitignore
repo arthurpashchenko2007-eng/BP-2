@@ -1,0 +1,10 @@
+// Папки компіляції
+[Oo]bj/
+[Bb]in/
+
+// Тимчасові файли
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
