@@ -17,7 +17,7 @@ public class Memoizer<TInput, TResult>
 }
 public class CacheEntry
 {
-    public TResult Value { get; }
+    public TResult Value { get; set; }
     public DateTime LastAccessed { get; set; }
     public int AccessCount { get; set; }
     public DateTime CreatedAt { get; set; }
@@ -38,6 +38,18 @@ public class CacheEntry
     }
     public TResult Execute(TInput input)
     {
-        
+        if (_policy == EvictionPolicy.Unlimited && _cache.TryGetValue(input, out var entry))
+        {  
+
+    if (DateTime.Now - entry.CreatedAt > _expiry)
+    _cache.Remove(input);
+        }
+        if (_cache.TryGetValue(input, out var cacheEntry))
+        {
+            cacheEntry.LastAccessed = DateTime.Now;
+            cacheEntry.AccessCount++;
+            return cacheEntry.Value;
+        }
+        TResult result = _fn(input);
     }
 }
