@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-
+nameofspace Lab1;
 
 public class Program
 {
